@@ -8,7 +8,7 @@ import base64
 # 自定义的 Jinja2 模板，支持 CSS
 TMPL = '''
 <div style="font-size: 32px;">
-<h1 style="color: black">Todo List</h1>
+<h1 style="color: black; text-align: center">Postcard</h1>  <!-- 添加居中 -->
 
 <ul>
 {% for item in items %}
@@ -16,12 +16,11 @@ TMPL = '''
 {% endfor %}
 </ul>
 
-<!-- 使用模板变量控制图片 -->
 <img src="{{ footer_image }}"
      style="display: block;
             width: 100%;
             margin-top: 20px;"
-     alt="列表插图">
+     alt="插图">
 </div>
 '''
 
@@ -72,7 +71,7 @@ async def random_pictures(self, event: AstrMessageEvent):
             b64_img = "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
 
         url = await self.html_render(TMPL,
-    {"items": ["吃饭", "睡觉", f"{info}"],"footer_image": b64_img}) # 第二个参数是 Jinja2 的渲染数据
+    {"items": [f"{info}"],"footer_image": b64_img}) # 第二个参数是 Jinja2 的渲染数据
         logger.info(pictures_file)
         yield event.image_result(url)
 
