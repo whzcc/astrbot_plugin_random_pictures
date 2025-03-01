@@ -18,10 +18,11 @@ class Main(Star):
         except:
             logger.info("本次未为随机图片创建文件夹")
         global pictures_dir
-        pictures_dir = os.path.dirname(os.path.abspath(__file__))+"\\pictures"  # 获取图片所在目录
+        pictures_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),"pictures") # 获取图片所在目录
+        # pictures_dir = os.path.dirname(os.path.abspath(__file__))+"\\pictures"  
         files = os.listdir(pictures_dir)   # 读入文件夹
         global num_png
-        num_png = len(files)       # 统计文件夹中的文件个数
+        num_png = len(files)-1       # 统计文件夹中的文件个数（减1是因为有info.json）
         logger.info(f"将在{pictures_dir}中寻找{num_png}张图片")
 
 @event_message_type(EventMessageType.PRIVATE_MESSAGE)
@@ -31,11 +32,11 @@ async def random_pictures(self, event: AstrMessageEvent):
 
         # 随机获取图片文件的路径
         i = random.randint(1,num_png)
-        pictures_file = pictures_dir+f"\\{i}.jpg" # 发送图片
+        pictures_file = os.path.join(pictures_dir,f"{i}.jpg")
         sender_id = event.get_sender_id()
 
         # 获取图片的解释说明
-        with open(pictures_dir+"\\info.json",encoding='utf-8') as f:
+        with open(os.path.join(pictures_dir,"info.json"),encoding='utf-8') as f:
             info = json.load(f)[str(i)] # 读到的解释说明
 
         chain = [
