@@ -44,7 +44,7 @@ class Main(Star):
         num_png = len(files)-1       # 统计文件夹中的文件个数（减1是因为有info.json）
         logger.info(f"将在{pictures_dir}中寻找{num_png}张图片")
 
-@event_message_type(EventMessageType.PRIVATE_MESSAGE)
+@event_message_type(EventMessageType.ALL)
 async def random_pictures(self, event: AstrMessageEvent):
     message_str = event.message_str # 获取消息的纯文本内容
     if message_str.startswith("/抽明信片"):
