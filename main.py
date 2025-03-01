@@ -68,7 +68,7 @@ async def random_pictures(self, event: AstrMessageEvent):
         
 
         url = await self.html_render(TMPL,
-    {"items": ["吃饭", "睡觉", "玩原神"],"footer_image": f"{pictures_file}"}) # 第二个参数是 Jinja2 的渲染数据
+    {"items": ["吃饭", "睡觉", "玩原神啊"],"footer_image": "https://picsum.photos/800/200"}) # 第二个参数是 Jinja2 的渲染数据
         yield event.image_result(url)
 
         event.stop_event()
