@@ -71,7 +71,7 @@ async def random_pictures(self, event: AstrMessageEvent):
             b64_img = "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
 
         url = await self.html_render(TMPL,
-    {"items": ["Agrato 为你介绍明信片：",f"{info}"],"footer_image": b64_img}) # 第二个参数是 Jinja2 的渲染数据
+    {"items": [f"Agrato 为你介绍明信片{i}：",f"{info}"],"footer_image": b64_img}) # 第二个参数是 Jinja2 的渲染数据
         logger.info(pictures_file)
         yield event.image_result(url)
 
