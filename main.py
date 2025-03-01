@@ -4,6 +4,17 @@ from astrbot.api.all import *
 import os,json
 import random
 
+# 自定义的 Jinja2 模板，支持 CSS
+TMPL = '''
+<div style="font-size: 32px;"> 
+<h1 style="color: black">Todo List</h1>
+
+<ul>
+{% for item in items %}
+    <li>{{ item }}</li>
+{% endfor %}
+</div>
+'''
 
 @register("random-pictures", "whzc", "随机发一些图片", "1.0.0", "repo url")
 
@@ -39,12 +50,18 @@ async def random_pictures(self, event: AstrMessageEvent):
         with open(os.path.join(pictures_dir,"info.json"),encoding='utf-8') as f:
             info = json.load(f)[str(i)] # 读到的解释说明
 
-        chain = [
-            Image.fromFileSystem(pictures_file), # 从本地文件目录发送图片
-            Plain(f"Agrato为你抽取到了{i}号图片："),
-            Plain(info)
-        ]
-        yield event.chain_result(chain)
+        # chain = [
+        #     Image.fromFileSystem(pictures_file), # 从本地文件目录发送图片
+        #     Plain(f"Agrato为你抽取到了{i}号图片："),
+        #     Plain(info)
+        # ]
+        # yield event.chain_result(chain)
+
+        
+
+        url = await self.html_render(TMPL, {"items": ["吃饭", "睡觉", "玩原神"]}) # 第二个参数是 Jinja2 的渲染数据
+        yield event.image_result(url)
+
 
         event.stop_event()
 
