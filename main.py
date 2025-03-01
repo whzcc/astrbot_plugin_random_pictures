@@ -40,8 +40,8 @@ async def random_pictures(self, event: AstrMessageEvent):
             info = json.load(f)[str(i)] # 读到的解释说明
 
         chain = [
-            Plain(f"Agrato为你抽取到了{i}号图片"),
             Image.fromFileSystem(pictures_file), # 从本地文件目录发送图片
+            Plain(f"Agrato为你抽取到了{i}号图片："),
             Plain(info)
         ]
         yield event.chain_result(chain)
