@@ -1,8 +1,6 @@
-# helloworld
+# Random Pictures
 
-AstrBot 插件模板
-
-A template plugin for AstrBot plugin feature
+随机选一张本地图片（在.\pictures中，需要按整数命名的.jpg文件），并附上解释说明（键值对位于.\pictures\info.json）
 
 # 支持
 
