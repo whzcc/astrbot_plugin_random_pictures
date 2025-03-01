@@ -3,6 +3,7 @@ from astrbot.api.star import Context, Star, register
 from astrbot.api.all import *
 import os,json
 import random
+import base64
 
 # 自定义的 Jinja2 模板，支持 CSS
 TMPL = '''
@@ -65,10 +66,13 @@ async def random_pictures(self, event: AstrMessageEvent):
         # ]
         # yield event.chain_result(chain)
 
-        
+
+        # 将图片转为base64编码
+        with open(pictures_file, "rb") as f:
+            b64_img = "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
 
         url = await self.html_render(TMPL,
-    {"items": ["吃饭", "睡觉", f"{info}"],"footer_image": pictures_file}) # 第二个参数是 Jinja2 的渲染数据
+    {"items": ["吃饭", "睡觉", f"{info}"],"footer_image": b64_img}) # 第二个参数是 Jinja2 的渲染数据
         logger.info(pictures_file)
         yield event.image_result(url)
 
